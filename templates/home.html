@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatApp</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+</head>
+<script>
+        $(document).ready(function(){
+            $("#user-form").on("submit", function(e){
+                e.preventDefault();
+                var current_user = $("#user_input").val();
+                var current_user_pass = $("#user_input_pass").val();
+                if (current_user){
+                    data = {"username": current_user,
+                            "password":current_user_pass};
+                    $.post('/api/register', JSON.stringify(data), function(response){
+                        $(".chat-body").removeClass("hide");
+                        $(".chat-register").addClass("hide");
+                        if(response=="<h1>Wrong pass</h1>"){ alert("wrong username or password ")}else {window.location.href = "/chat";}
+                    });
+                }
+            });
+        });
+    </script>
+<body>
+    <div class="chat-body card">
+        <div class="card-body">
+            <h4 class="card-title text-center"> Chat App </h4>
+            <hr>
+            <form class="form-inline" id="user-form">
+                <input type="text" class="form-control" id="user_input" placeholder="Enter your name">
+                <input type="password" class="form-control" id="user_input_pass" placeholder="Enter your password">
+                <button id="start" type="submit" class="btn btn-primary">Start Chat</button>
+            </form>
+            <p> try username and password: </p>
+            <ul>
+                <li>user1 pass1</li>
+                <li>user2 pass2</li>
+                <li>user3 pass3</li>
+                <li>user4 pass4</li>
+
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
